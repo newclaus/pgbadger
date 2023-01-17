@@ -2504,6 +2504,18 @@ sub set_file_list
 		push(@lfiles, $file_orig);
 		$empty_files = 0;
 	}
+	elsif (-d $file)
+	{		
+		opendir DIR,$file;
+		my @dir = readdir(DIR);
+		close DIR;
+		foreach(@dir){			
+			if (-f $file . $_ ){
+				push(@lfiles, "$file$_");
+			}
+		}
+		$empty_files = 0;
+	}
 	# For input from other sources than stdin
 	else
 	{
